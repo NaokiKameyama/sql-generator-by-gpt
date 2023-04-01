@@ -1,11 +1,41 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import { Inter } from 'next/font/google'
-import styles from '@/styles/Home.module.css'
+import Head from "next/head";
+import Image from "next/image";
+import { Inter } from "next/font/google";
+import styles from "@/styles/Home.module.scss";
+import { Textarea, Button } from "@nextui-org/react";
+import { useState } from "react";
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
+  const sampleInputData = `名前, 年齢, 性別
+Alice, 30, 女性
+Bob, 25, 男性
+Carol, 22, 女性`;
+  const sampleRequirement = `男性、女性の平均年齢を出力するSQLを作成してください。`;
+  const sampleOutput = `SELECT
+  性別,
+  AVG(年齢) as 平均年齢
+FROM
+  table1
+GROUP BY
+  性別;
+  `;
+  const [inputData, setInputData] = useState(sampleInputData);
+  const [requirement, setRequirement] = useState(sampleRequirement);
+  const [output, setOutput] = useState(sampleOutput);
+  const generateSQL = async () => {
+    const obj = { inputData, requirement };
+    const method = "POST";
+    const body = JSON.stringify(obj);
+    const headers = {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    };
+    const res = await fetch("/api/hello", { method, headers, body }).then((res) => res.json());
+    console.log(res.gptMessage);
+    setOutput(res.gptMessage);
+  };
   return (
     <>
       <Head>
@@ -16,56 +46,76 @@ export default function Home() {
       </Head>
       <main className={styles.main}>
         <div className={styles.description}>
-          <p>
-            Get started by editing&nbsp;
-            <code className={styles.code}>pages/index.tsx</code>
-          </p>
+          <div className={styles.appName}>BigQuery SQL Generator</div>
           <div>
-            <a
-              href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              By{' '}
-              <Image
-                src="/vercel.svg"
-                alt="Vercel Logo"
-                className={styles.vercelLogo}
-                width={100}
-                height={24}
-                priority
-              />
+            <a href="https://github.com/NaokiKameyama" target="_blank" rel="noopener noreferrer">
+              This service created by{" "}
+              <div>
+                <Image
+                  src="/profile.jpeg"
+                  alt="NaokiKameyama Logo"
+                  className={styles.profileIcon}
+                  width={100}
+                  height={24}
+                  priority
+                />
+                <div className={styles.profileName}>Naoki Kameyama</div>
+              </div>
             </a>
           </div>
         </div>
 
         <div className={styles.center}>
-          <Image
-            className={styles.logo}
-            src="/next.svg"
-            alt="Next.js Logo"
-            width={180}
-            height={37}
-            priority
-          />
-          <div className={styles.thirteen}>
-            <Image
-              src="/thirteen.svg"
-              alt="13"
-              width={40}
-              height={31}
-              priority
-            />
+          <div className={styles.left}>
+            {/* <Textarea
+              fullWidth={true}
+              minRows={30}
+              label="TABLE_DATA"
+              placeholder="カンマ区切りでヘッダーとデータを入力してください。"
+              status="default"
+              value={inputData}
+              onChange={(event) => setInputData(event.target.value)}
+            /> */}
+            <label className={styles.label}>TABLE_DATA</label>
+            <textarea
+              className={styles.textarea}
+              rows={15}
+              value={inputData}
+              onChange={(event) => setInputData(event.target.value)}
+            ></textarea>
+          </div>
+          <div className={styles.right}>
+            {/* <Textarea
+              color="default"
+              fullWidth={true}
+              minRows={30}
+              label="TABLE_DATAに対して、どのようなSQLを生成して欲しいですか？"
+              placeholder="入力したデータに対して、作成してほしいSQLの要件を記述してください。"
+              status="default"
+              value={requirement}
+              onChange={(event) => setRequirement(event.target.value)}
+            /> */}
+            <label className={styles.label}>どのようなSQLを生成して欲しいですか？</label>
+            <textarea
+              className={styles.textarea}
+              rows={15}
+              value={requirement}
+              onChange={(event) => setRequirement(event.target.value)}
+            ></textarea>
           </div>
         </div>
+        <Button size="lg" color="gradient" onPress={generateSQL}>
+          SQLを生成する
+        </Button>
 
-        <div className={styles.grid}>
-          <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+        <div className={styles.output}>
+          {/* <Textarea fullWidth={true} readOnly minRows={30} label="生成されたSQL" value={output} /> */}
+          <label className={styles.label}>生成結果</label>
+          <textarea className={styles.textarea} rows={15} value={output}></textarea>
+        </div>
+
+        {/* <div className={styles.grid}>
+          <a href="" className={styles.card} target="_blank" rel="noopener noreferrer">
             <h2 className={inter.className}>
               Docs <span>-&gt;</span>
             </h2>
@@ -74,12 +124,7 @@ export default function Home() {
             </p>
           </a>
 
-          <a
-            href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+          <a href="" className={styles.card} target="_blank" rel="noopener noreferrer">
             <h2 className={inter.className}>
               Learn <span>-&gt;</span>
             </h2>
@@ -88,12 +133,7 @@ export default function Home() {
             </p>
           </a>
 
-          <a
-            href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+          <a href="" className={styles.card} target="_blank" rel="noopener noreferrer">
             <h2 className={inter.className}>
               Templates <span>-&gt;</span>
             </h2>
@@ -102,22 +142,16 @@ export default function Home() {
             </p>
           </a>
 
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+          <a href="" className={styles.card} target="_blank" rel="noopener noreferrer">
             <h2 className={inter.className}>
               Deploy <span>-&gt;</span>
             </h2>
             <p className={inter.className}>
-              Instantly deploy your Next.js site to a shareable URL
-              with&nbsp;Vercel.
+              Instantly deploy your Next.js site to a shareable URL with&nbsp;Vercel.
             </p>
           </a>
-        </div>
+        </div> */}
       </main>
     </>
-  )
+  );
 }
