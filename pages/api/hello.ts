@@ -11,7 +11,7 @@ type Data = {
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
   const { inputData, requirement } = req.body;
-  const content = `以下のようなTABLE_DATAという名前のテーブルがあります。\n${inputData}\n\n${requirement}\n出力結果はSQLのコードのみとしてください。出力されるSQLは整形して読みやすくしてください。`;
+  const content = `以下のようなTABLE_DATAという名前のテーブルがあります。\n${inputData}\n\n${requirement}\n出力結果はSQLのコードのみとしてください。出力されるSQLは改行などを用いて整形して読みやすくしてください。FROMで指定されたテーブル名は\`で囲む必要があります。`;
   const openai = new OpenAIApi(configuration);
   const completion = await openai.createChatCompletion({
     model: "gpt-3.5-turbo",

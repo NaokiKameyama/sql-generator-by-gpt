@@ -1,26 +1,24 @@
 import Head from "next/head";
 import Image from "next/image";
 import styles from "@/styles/Home.module.scss";
-import { Button } from "@nextui-org/react";
+import { Button, Loading } from "@nextui-org/react";
 import { useState } from "react";
 
 export default function Home() {
-  const sampleInputData = `名前, 年齢, 性別
-Alice, 30, 女性
-Bob, 25, 男性
-Carol, 22, 女性`;
-  const sampleRequirement = `男性、女性の平均年齢を出力するSQLを作成してください。`;
-  const sampleOutput = `SELECT
-  性別,
-  AVG(年齢) as 平均年齢
-FROM
-  table1
-GROUP BY
-  性別;
-  `;
+  const sampleInputData = `student,score
+Aさん,70
+Bさん,40
+Cさん,80
+Dさん,30
+Eさん,60
+Fさん,70`;
+  const sampleRequirement = `全studentのscoreの平均値、最大値、最小値を出力するSQLを作成してください。
+SQLはBigQueryで動作可能な状態で作成してください。`;
+  const sampleOutput = ``;
   const [inputData, setInputData] = useState(sampleInputData);
   const [requirement, setRequirement] = useState(sampleRequirement);
   const [output, setOutput] = useState(sampleOutput);
+  const [isLoading, setIsLoading] = useState(false);
   const generateSQL = async () => {
     const obj = { inputData, requirement };
     const method = "POST";
@@ -29,8 +27,10 @@ GROUP BY
       Accept: "application/json",
       "Content-Type": "application/json",
     };
+    setOutput("");
+    setIsLoading(true);
     const res = await fetch("/api/hello", { method, headers, body }).then((res) => res.json());
-    console.log(res.gptMessage);
+    setIsLoading(false);
     setOutput(res.gptMessage);
   };
   return (
@@ -44,9 +44,9 @@ GROUP BY
       <main className={styles.main}>
         <div className={styles.description}>
           <div className={styles.appName}>SQL Generator</div>
-          <div>
+          <div className={styles.myName}>
             <a href="https://github.com/NaokiKameyama" target="_blank" rel="noopener noreferrer">
-              This service created by{" "}
+              Created by{" "}
               <div>
                 <Image
                   src="/profile.jpeg"
@@ -61,8 +61,39 @@ GROUP BY
             </a>
           </div>
         </div>
+        <table className={styles.center}>
+          <tbody>
+            <tr>
+              <th className={styles.left}>
+                <label className={styles.label}>TABLE_DATA ※csv形式推奨</label>
+              </th>
+              <th className={styles.right}>
+                <label className={styles.label}>TABLE_DATAに対するSQLの要件</label>
+              </th>
+            </tr>
+            <tr>
+              <td className={styles.left}>
+                <textarea
+                  className={styles.textarea}
+                  rows={15}
+                  value={inputData}
+                  onChange={(event) => setInputData(event.target.value)}
+                  wrap="off"
+                ></textarea>
+              </td>
+              <td className={styles.right}>
+                <textarea
+                  className={styles.textarea}
+                  rows={15}
+                  value={requirement}
+                  onChange={(event) => setRequirement(event.target.value)}
+                ></textarea>
+              </td>
+            </tr>
+          </tbody>
+        </table>
 
-        <div className={styles.center}>
+        {/* <div className={styles.center}>
           <div className={styles.left}>
             <label className={styles.label}>TABLE_DATA ※csv形式推奨</label>
             <textarea
@@ -81,14 +112,29 @@ GROUP BY
               onChange={(event) => setRequirement(event.target.value)}
             ></textarea>
           </div>
-        </div>
-        <Button size="lg" color="gradient" onPress={generateSQL}>
-          SQLを生成する
-        </Button>
+        </div> */}
 
+        {/* <Button size="lg" color="gradient" onPress={generateSQL}>
+          SQLを生成する
+        </Button> */}
+        <div>
+          {isLoading ? (
+            <Loading size="lg" />
+          ) : (
+            <Button size="lg" color="gradient" onPress={generateSQL}>
+              SQLを生成する
+            </Button>
+          )}
+        </div>
         <div className={styles.output}>
           <label className={styles.label}>生成結果</label>
-          <textarea className={styles.textarea} rows={15} value={output}></textarea>
+          <textarea
+            className={styles.textarea}
+            rows={15}
+            value={output}
+            onChange={(event) => setOutput(event.target.value)}
+            wrap="off"
+          ></textarea>
         </div>
 
         {/* <div className={styles.grid}>
