@@ -3,10 +3,11 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  padding: 6rem;
+  padding: 3rem 10rem 2rem 10rem;
+  margin-bottom: 100px;
   min-height: 100vh;
   @media (max-width: 700px) {
-    padding: 1rem;
+    padding: 4rem 1rem 2rem 1rem;
   }
 }
 
@@ -51,8 +52,8 @@
 }
 
 .appName {
-  background-color: rgba(255, 255, 255, 0.613);
-  font-size: larger;
+  // background-color: rgba(255, 255, 255, 0.613);
+  font-size: x-large;
   padding: 20px;
   border-radius: var(--border-radius);
   font-family: var(--font-mono);
@@ -61,6 +62,7 @@
 
 .myName {
   text-align: right;
+  cursor: pointer;
 }
 
 .grid {
@@ -126,9 +128,13 @@
 
 .label {
   font-size: smaller;
+  font-family: var(--font-mono);
+  @media (max-width: 700px) {
+    font-size: x-small;
+  }
 }
 .textarea {
-  padding: 10px;
+  padding: 10px 10px 0px 10px;
   width: 98%;
   height: 350px;
   line-height: 1.5;
@@ -142,6 +148,10 @@
   }
 }
 
+.note {
+  font-size: xx-small;
+  text-align: center;
+}
 .center::before {
   background: var(--secondary-glow);
   border-radius: 50%;

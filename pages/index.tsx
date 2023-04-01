@@ -1,10 +1,12 @@
 import Head from "next/head";
 import Image from "next/image";
 import styles from "@/styles/Home.module.scss";
-import { Button, Loading } from "@nextui-org/react";
+import { Button, Loading, Avatar, Tooltip, Text } from "@nextui-org/react";
 import { useState } from "react";
 
 export default function Home() {
+  const inputDataLengthLimit = 500;
+  const requirementLengthLimit = 500;
   const sampleInputData = `student,score
 Aさん,70
 Bさん,40
@@ -43,20 +45,48 @@ SQLはBigQueryで動作可能な状態で作成してください。`;
       </Head>
       <main className={styles.main}>
         <div className={styles.description}>
-          <div className={styles.appName}>SQL Generator</div>
+          {/* <div className={styles.appName}>SQL Generator</div> */}
+          {/* <Button auto flat>
+              SQL Generator
+            </Button> */}
+          <div className={styles.appName}>
+            <Text
+              h1
+              size={25}
+              css={{
+                textGradient: "45deg, $blue600 -20%, $pink600 50%",
+              }}
+              weight="bold"
+            >
+              SQL Generator
+            </Text>
+            {/* SQL Generator */}
+          </div>
           <div className={styles.myName}>
             <a href="https://github.com/NaokiKameyama" target="_blank" rel="noopener noreferrer">
-              Created by{" "}
+              Created by
               <div>
-                <Image
+                {/* <Image
                   src="/profile.jpeg"
                   alt="NaokiKameyama Logo"
                   className={styles.profileIcon}
                   width={100}
                   height={24}
                   priority
-                />
-                <div className={styles.profileName}>Naoki Kameyama</div>
+                /> */}
+                <Tooltip content={"🧑‍💻"} initialVisible={true}>
+                  <Avatar
+                    className={styles.profileIcon}
+                    size="xl"
+                    src="/profile.jpeg"
+                    color="gradient"
+                    bordered
+                    zoomed
+                    pointer={true}
+                    borderWeight={"normal"}
+                  />
+                </Tooltip>
+                <div className={styles.profileName}>Naoki</div>
               </div>
             </a>
           </div>
@@ -80,6 +110,9 @@ SQLはBigQueryで動作可能な状態で作成してください。`;
                   onChange={(event) => setInputData(event.target.value)}
                   wrap="off"
                 ></textarea>
+                <p className={styles.note}>
+                  現在{inputData.length}文字　※{inputDataLengthLimit}文字以内
+                </p>
               </td>
               <td className={styles.right}>
                 <textarea
@@ -88,6 +121,9 @@ SQLはBigQueryで動作可能な状態で作成してください。`;
                   value={requirement}
                   onChange={(event) => setRequirement(event.target.value)}
                 ></textarea>
+                <p className={styles.note}>
+                  現在{requirement.length}文字　※{requirementLengthLimit}文字以内
+                </p>
               </td>
             </tr>
           </tbody>
@@ -121,11 +157,23 @@ SQLはBigQueryで動作可能な状態で作成してください。`;
           {isLoading ? (
             <Loading size="lg" />
           ) : (
-            <Button size="lg" color="gradient" onPress={generateSQL}>
-              SQLを生成する
+            <Button
+              size="lg"
+              color="gradient"
+              onPress={generateSQL}
+              disabled={
+                inputData.length > inputDataLengthLimit ||
+                requirement.length > requirementLengthLimit
+              }
+            >
+              {inputData.length > inputDataLengthLimit ||
+              requirement.length > requirementLengthLimit
+                ? "最大文字数を超えています"
+                : "SQLを生成する"}
             </Button>
           )}
         </div>
+
         <div className={styles.output}>
           {/* <label className={styles.label}>生成結果</label> */}
           <textarea
