@@ -1,11 +1,8 @@
 import Head from "next/head";
 import Image from "next/image";
-import { Inter } from "next/font/google";
 import styles from "@/styles/Home.module.scss";
-import { Textarea, Button } from "@nextui-org/react";
+import { Button } from "@nextui-org/react";
 import { useState } from "react";
-
-const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
   const sampleInputData = `名前, 年齢, 性別
@@ -46,7 +43,7 @@ GROUP BY
       </Head>
       <main className={styles.main}>
         <div className={styles.description}>
-          <div className={styles.appName}>BigQuery SQL Generator</div>
+          <div className={styles.appName}>SQL Generator</div>
           <div>
             <a href="https://github.com/NaokiKameyama" target="_blank" rel="noopener noreferrer">
               This service created by{" "}
@@ -67,16 +64,7 @@ GROUP BY
 
         <div className={styles.center}>
           <div className={styles.left}>
-            {/* <Textarea
-              fullWidth={true}
-              minRows={30}
-              label="TABLE_DATA"
-              placeholder="カンマ区切りでヘッダーとデータを入力してください。"
-              status="default"
-              value={inputData}
-              onChange={(event) => setInputData(event.target.value)}
-            /> */}
-            <label className={styles.label}>TABLE_DATA</label>
+            <label className={styles.label}>TABLE_DATA ※csv形式推奨</label>
             <textarea
               className={styles.textarea}
               rows={15}
@@ -85,16 +73,6 @@ GROUP BY
             ></textarea>
           </div>
           <div className={styles.right}>
-            {/* <Textarea
-              color="default"
-              fullWidth={true}
-              minRows={30}
-              label="TABLE_DATAに対して、どのようなSQLを生成して欲しいですか？"
-              placeholder="入力したデータに対して、作成してほしいSQLの要件を記述してください。"
-              status="default"
-              value={requirement}
-              onChange={(event) => setRequirement(event.target.value)}
-            /> */}
             <label className={styles.label}>どのようなSQLを生成して欲しいですか？</label>
             <textarea
               className={styles.textarea}
@@ -109,7 +87,6 @@ GROUP BY
         </Button>
 
         <div className={styles.output}>
-          {/* <Textarea fullWidth={true} readOnly minRows={30} label="生成されたSQL" value={output} /> */}
           <label className={styles.label}>生成結果</label>
           <textarea className={styles.textarea} rows={15} value={output}></textarea>
         </div>
