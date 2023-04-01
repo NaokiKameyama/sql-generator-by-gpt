@@ -98,6 +98,7 @@
 
 .center {
   margin-top: 20px;
+  // margin-bottom: 15px;
   width: 100%;
   // display: flex;
   // justify-content: space-around;
@@ -112,6 +113,7 @@
 
 .output {
   width: 70%;
+  margin-top: 10px;
   // height: 200px;
   // background-color: yellow;
   // display: flex;
@@ -127,13 +129,14 @@
 }
 .textarea {
   padding: 10px;
-  width: 100%;
+  width: 98%;
   height: 350px;
   line-height: 1.5;
   color: black;
   background-color: white;
   border-radius: var(--border-radius);
   font-size: larger;
+  border: 1px solid #cfcfcf;
   @media (max-width: 700px) {
     height: 250px;
   }

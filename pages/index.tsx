@@ -127,9 +127,10 @@ SQLはBigQueryで動作可能な状態で作成してください。`;
           )}
         </div>
         <div className={styles.output}>
-          <label className={styles.label}>生成結果</label>
+          {/* <label className={styles.label}>生成結果</label> */}
           <textarea
             className={styles.textarea}
+            placeholder={"こちらにSQLが生成されます"}
             rows={15}
             value={output}
             onChange={(event) => setOutput(event.target.value)}
