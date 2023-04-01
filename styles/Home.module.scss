@@ -141,17 +141,26 @@
   color: black;
   background-color: white;
   border-radius: var(--border-radius);
-  font-size: larger;
+  font-size: medium;
   border: 1px solid #cfcfcf;
+  font-family: var(--font-mono);
   @media (max-width: 700px) {
     height: 250px;
     font-size: small;
   }
 }
 
+.mainButton {
+  font-family: var(--font-mono);
+}
+
 .note {
-  font-size: xx-small;
+  font-size: smaller;
   text-align: center;
+  font-family: var(--font-mono);
+  @media (max-width: 700px) {
+    font-size: xx-small;
+  }
 }
 // .center::before {
 //   background: var(--secondary-glow);

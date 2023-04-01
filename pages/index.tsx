@@ -45,10 +45,6 @@ SQLはBigQueryで動作可能な状態で作成してください。`;
       </Head>
       <main className={styles.main}>
         <div className={styles.description}>
-          {/* <div className={styles.appName}>SQL Generator</div> */}
-          {/* <Button auto flat>
-              SQL Generator
-            </Button> */}
           <div className={styles.appName}>
             <Text
               h1
@@ -60,20 +56,11 @@ SQLはBigQueryで動作可能な状態で作成してください。`;
             >
               SQL Generator
             </Text>
-            {/* SQL Generator */}
           </div>
           <div className={styles.myName}>
             <a href="https://github.com/NaokiKameyama" target="_blank" rel="noopener noreferrer">
               Created by
               <div>
-                {/* <Image
-                  src="/profile.jpeg"
-                  alt="NaokiKameyama Logo"
-                  className={styles.profileIcon}
-                  width={100}
-                  height={24}
-                  priority
-                /> */}
                 <Tooltip content={"🧑‍💻"} initialVisible={true}>
                   <Avatar
                     className={styles.profileIcon}
@@ -128,54 +115,28 @@ SQLはBigQueryで動作可能な状態で作成してください。`;
             </tr>
           </tbody>
         </table>
-
-        {/* <div className={styles.center}>
-          <div className={styles.left}>
-            <label className={styles.label}>TABLE_DATA ※csv形式推奨</label>
-            <textarea
-              className={styles.textarea}
-              rows={15}
-              value={inputData}
-              onChange={(event) => setInputData(event.target.value)}
-            ></textarea>
-          </div>
-          <div className={styles.right}>
-            <label className={styles.label}>どのようなSQLを生成して欲しいですか？</label>
-            <textarea
-              className={styles.textarea}
-              rows={15}
-              value={requirement}
-              onChange={(event) => setRequirement(event.target.value)}
-            ></textarea>
-          </div>
-        </div> */}
-
-        {/* <Button size="lg" color="gradient" onPress={generateSQL}>
-          SQLを生成する
-        </Button> */}
         <div>
-          {isLoading ? (
-            <Loading size="lg" />
-          ) : (
-            <Button
-              size="lg"
-              color="gradient"
-              onPress={generateSQL}
-              disabled={
-                inputData.length > inputDataLengthLimit ||
-                requirement.length > requirementLengthLimit
-              }
-            >
-              {inputData.length > inputDataLengthLimit ||
-              requirement.length > requirementLengthLimit
-                ? "最大文字数を超えています"
-                : "SQLを生成する"}
-            </Button>
-          )}
+          <Button
+            className={styles.mainButton}
+            size="lg"
+            color="gradient"
+            onPress={generateSQL}
+            disabled={
+              inputData.length > inputDataLengthLimit || requirement.length > requirementLengthLimit
+            }
+          >
+            {inputData.length > inputDataLengthLimit ||
+            requirement.length > requirementLengthLimit ? (
+              "最大文字数を超えています"
+            ) : isLoading ? (
+              <Loading type="points" color="currentColor" size="sm" />
+            ) : (
+              "SQLを生成する"
+            )}
+          </Button>
         </div>
 
         <div className={styles.output}>
-          {/* <label className={styles.label}>生成結果</label> */}
           <textarea
             className={styles.textarea}
             placeholder={"こちらにSQLが生成されます"}
