@@ -16,17 +16,17 @@ type Data = {
 export default async function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
   const { inputData, requirement } = req.body;
   const content = `以下ようなinputDataテーブルがあります。\n${inputData}\n\n${requirement}\n出力結果はSQLのコードのみとしてください。`;
-  const openai = new OpenAIApi(configuration);
-  const completion = await openai.createChatCompletion({
-    model: "gpt-3.5-turbo",
-    messages: [
-      {
-        role: "user",
-        content,
-      },
-    ],
-  });
-  const gptMessage = completion.data.choices[0].message?.content ?? "";
-  res.status(200).json({ gptMessage });
-  // res.status(200).json({ gptMessage: content });
+  // const openai = new OpenAIApi(configuration);
+  // const completion = await openai.createChatCompletion({
+  //   model: "gpt-3.5-turbo",
+  //   messages: [
+  //     {
+  //       role: "user",
+  //       content,
+  //     },
+  //   ],
+  // });
+  // const gptMessage = completion.data.choices[0].message?.content ?? "";
+  // res.status(200).json({ gptMessage });
+  res.status(200).json({ gptMessage: content });
 }
