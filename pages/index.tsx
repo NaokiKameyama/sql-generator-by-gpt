@@ -58,10 +58,10 @@ SQLはBigQueryで動作可能な状態で作成してください。`;
             </Text>
           </div>
           <div className={styles.myName}>
-            <a href="https://github.com/NaokiKameyama" target="_blank" rel="noopener noreferrer">
+            <a href="https://www.atukan-blog.com/contact" target="_blank" rel="noopener noreferrer">
               Created by
               <div>
-                <Tooltip content={"🧑‍💻"} initialVisible={true}>
+                <Tooltip content={"📨"} initialVisible={true}>
                   <Avatar
                     className={styles.profileIcon}
                     size="xl"
@@ -127,11 +127,11 @@ SQLはBigQueryで動作可能な状態で作成してください。`;
           >
             {inputData.length > inputDataLengthLimit ||
             requirement.length > requirementLengthLimit ? (
-              "最大文字数を超えています"
+              "文字数を超えています😔 文字数を減らしてください🙏"
             ) : isLoading ? (
               <Loading type="points" color="currentColor" size="sm" />
             ) : (
-              "SQLを生成する"
+              "SQLを生成する 🥳"
             )}
           </Button>
         </div>
