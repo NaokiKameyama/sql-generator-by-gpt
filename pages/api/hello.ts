@@ -3,15 +3,18 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { Configuration, OpenAIApi } from "openai";
 import * as admin from "firebase-admin";
 
-admin.initializeApp({
-  credential: admin.credential.cert({
-    projectId: process.env.FSA_PROJECT_ID,
-    privateKey: process.env.FSA_PRIVATE_KEY
-      ? process.env.FSA_PRIVATE_KEY.replace(/\\n/g, "\n")
-      : process.env.FSA_PRIVATE_KEY,
-    clientEmail: process.env.FSA_CLIENT_EMAIL,
-  }),
-});
+if (admin.apps.length === 0) {
+  admin.initializeApp({
+    credential: admin.credential.cert({
+      projectId: process.env.FSA_PROJECT_ID,
+      privateKey: process.env.FSA_PRIVATE_KEY
+        ? process.env.FSA_PRIVATE_KEY.replace(/\\n/g, "\n")
+        : process.env.FSA_PRIVATE_KEY,
+      clientEmail: process.env.FSA_CLIENT_EMAIL,
+    }),
+  });
+}
+
 const db = admin.firestore();
 
 const configuration = new Configuration({
