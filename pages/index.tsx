@@ -1,7 +1,7 @@
 import Head from "next/head";
 import Image from "next/image";
 import styles from "@/styles/Home.module.scss";
-import { Button, Loading, Avatar, Tooltip, Text } from "@nextui-org/react";
+import { Button, Loading, Avatar, Tooltip, Text, Link } from "@nextui-org/react";
 import { useState } from "react";
 
 export default function Home() {
@@ -185,6 +185,18 @@ SQLはBigQueryで動作可能な状態で作成してください。`;
           </a>
         </div> */}
       </main>
+      <div className={styles.footer}>
+        <Link
+          className={styles.privacyPolicy}
+          href="https://www.atukan-blog.com/privacyPolicy"
+          isExternal
+          block
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          プライバシーポリシー
+        </Link>
+      </div>
     </>
   );
 }

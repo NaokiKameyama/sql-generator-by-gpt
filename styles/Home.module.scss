@@ -4,7 +4,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 3rem 10rem 2rem 10rem;
-  margin-bottom: 100px;
+  // margin-bottom: 100px;
   min-height: 100vh;
   @media (max-width: 700px) {
     padding: 4rem 1rem 2rem 1rem;
@@ -152,6 +152,9 @@
 
 .mainButton {
   font-family: var(--font-mono);
+  @media (max-width: 700px) {
+    margin-top: 20px;
+  }
 }
 
 .note {
@@ -232,6 +235,15 @@
     rgba(var(--tile-end-rgb), 1)
   );
   background-clip: content-box;
+}
+
+.footer {
+  text-align: center;
+  margin: auto;
+  padding: 10px;
+  .privacyPolicy {
+    text-align: center;
+  }
 }
 
 /* Enable hover only on non-touch devices */
